@@ -32,7 +32,7 @@ canvas{
 }
 
 .reciept{
-    background-image: url(/asset/img/receipt.png);
+    background-image: url(../../asset/img/receipt.png);
     width: 590px;
     height: 1050px;
     background-size: contain;
