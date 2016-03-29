@@ -1,6 +1,4 @@
 App = {}
-App.brightness = 0;
-App.contrast = 1;
 
 App.run = function() {
 
@@ -115,15 +113,18 @@ App.run = function() {
         var height = el.offsetHeight;
 
         var canvBlock = $('#canvas')[0];
-        canvas.width = width; 
-        canvas.height = height;
+        canvBlock.width = width;
+        canvBlock.height = height + 100;
         var ctx = canvBlock.getContext('2d');
+
         ctx.drawImage(el, ZERO, ZERO, width, height);
         var data = ctx.getImageData(ZERO, ZERO, width, height);
         self.contrast(data);
         self.grayscale(data);
         self.atkinson_alg(data, height, width);
         self.spread(data);
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, width, canvBlock.height);
         ctx.putImageData(data, ZERO, ZERO);
     }
     var sourceImg = $('.source')[0];
@@ -131,5 +132,7 @@ App.run = function() {
 };
 
 window.onload = function(e) {
+    App.brightness = localStorage.brightness || 0;
+    App.contrast = localStorage.contrast || 0.8;
     App.run();
 }
