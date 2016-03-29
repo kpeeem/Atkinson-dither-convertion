@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8">
     <title>Dither</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link href="asset/css/slabtext.css" rel="stylesheet" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Yeseva+One&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!-- Loading Bootstrap -->
     <link href="asset/flatui/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="asset/flatui/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -12,6 +15,7 @@
     <link href="asset/flatui/css/flat-ui.css" rel="stylesheet">
     <link href="asset/css/main.css" rel="stylesheet">
     <link rel="shortcut icon" href="asset/flatui/images/favicon.ico">
+    <link rel="stylesheet" href="//cdn.quilljs.com/0.20.1/quill.snow.css" />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -26,54 +30,105 @@
         </div>
         <!-- /.row -->
         <div class="row margin20">
-            <div class="col-xs-12 col-sm-6 source-container">
-                <img class="source img-rounded col-center" alt="" src="/asset/img/image.jpg">
-                <input class="btn btn-large btn-block btn-primary margin20 col-center" type='file' style="width: 270px;" /><!-- /.btn btn-large btn-block btn-primary -->
+            <div class="col-xs-12 col-lg-4">
+                <div class="editor-wrapper">
+                    <div class="editor-toolbar">
+                        <select class="ql-size">
+                            <option value="10px">Small</option>
+                            <option value="13px" selected>Normal</option>
+                            <option value="18px">Large</option>
+                            <option value="32px">Huge</option>
+                        </select>
+                        <select title="Font" class="ql-font">
+                            <option value="sans-serif" selected="">Sans Serif</option>
+                            <option value="serif">Serif</option>
+                            <option value="monospace">Monospace</option>
+                            <option value="Roboto Condensed">Roboto Condensed</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Yeseva One">Yeseva One</option>
+                        </select>
+                        <span class="ql-format-group">
+                            <span title="Bold" class="ql-format-button ql-bold"></span>
+                        <span class="ql-format-separator"></span>
+                        <span title="Italic" class="ql-format-button ql-italic"></span>
+                        <span class="ql-format-separator"></span>
+                        <span title="Underline" class="ql-format-button ql-underline"></span>
+                        <span class="ql-format-separator"></span>
+                        <span title="Strikethrough" class="ql-format-button slabtext-button"></span>
+                        </span>
+                        <span class="ql-format-group">
+                            <select title="Text Alignment" class="ql-align">
+                                <option value="left" label="Left" selected=""></option>
+                                <option value="center" label="Center"></option>
+                                <option value="right" label="Right"></option>
+                                <option value="justify" label="Justify"></option>
+                            </select>
+                        </span>
+                    </div>
+                    <!-- /.editor-toolbar -->
+                    <div class="editor">
+                        <div>Hello World!</div>
+                        <div>Some initial <b>bold</b> text</div>
+                    </div>
+                </div>
+                <button class="btn btn-large btn-block btn-primary margin20 col-center get-screenshot" style="width: 270px;">Convert to image</button>
+                <!-- /.editor-wrapper -->-
+            </div>
+            <!-- /.col-xs-12 col-sm-3 -->
+            <div class="col-xs-12 col-lg-4 source-container">
+                <img class="source img-rounded col-center" alt="" src="asset/img/image.jpg">
+                <input class="btn btn-large btn-block btn-primary margin20 col-center" type='file' style="width: 270px;" />
+                <!-- /.btn btn-large btn-block btn-primary -->
+                <!-- /.editor -->
             </div>
             <!-- /.col-md-6 -->
-            <div class="col-xs-12 col-sm-6">
-            <div class="reciept">
-                <canvas id="canvas" class=''></canvas>
-                <div class="row margin20">
-                    <div class="margin20 group col-xs-8 col-xs-offset-2">
-                        <div class="col-xs-3">
-                            <div class="label label-large">
-                                Brightness
+            <div class="col-xs-12 col-lg-4">
+                <div class="reciept">
+                    <canvas id="canvas" class=''></canvas>
+                    <div class="row margin20">
+                        <div class="margin20 group col-xs-10 col-xs-offset-1">
+                            <div class="col-xs-3">
+                                <div class="label label-large">
+                                    Brightness
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.col-xs-3 -->
-                        <div class="col-xs-9">
-                            <div class="slider slider-brightness" class="ui-slider"></div>
-                        </div>
-                        <!-- /.col-xs-9 -->
-                    </div>
-                    <!-- /.margin20 group -->
-                    <div class="margin20 group col-xs-8 col-xs-offset-2">
-                        <div class="col-xs-3">
-                            <div class="label label-large">
-                                Contrast
+                            <!-- /.col-xs-3 -->
+                            <div class="col-xs-9">
+                                <div class="slider slider-brightness" class="ui-slider"></div>
                             </div>
+                            <!-- /.col-xs-9 -->
                         </div>
-                        <!-- /.col-xs-3 -->
-                        <div class="col-xs-9">
-                            <div class="slider slider-contrast" class="ui-slider"></div>
+                        <!-- /.margin20 group -->
+                        <div class="margin20 group col-xs-10 col-xs-offset-1">
+                            <div class="col-xs-3">
+                                <div class="label label-large">
+                                    Contrast
+                                </div>
+                            </div>
+                            <!-- /.col-xs-3 -->
+                            <div class="col-xs-9">
+                                <div class="slider slider-contrast" class="ui-slider"></div>
+                            </div>
+                            <!-- /.col-xs-3 -->
+                            <!-- /.btn btn-large btn-block btn-primary -->
                         </div>
-                        <!-- /.col-xs-3 -->
+                        <!-- /.margin20 group -->
+                        <button class="btn btn-large btn-block btn-primary margin20 col-center print" style="width: 270px; margin-top:20px;">Print</button>
                     </div>
-                    <!-- /.margin20 group -->
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
             </div>
-            </div><!-- /.reciept -->
+            <!-- /.reciept -->
             <!-- /.col-xs-6 -->
         </div>
         <!-- /.row -->
     </div>
-    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
     <!-- Load JS here for greater good =============================-->
     <script src="asset/flatui/js/jquery-1.8.3.min.js"></script>
     <script src="asset/flatui/js/jquery-ui-1.10.3.custom.min.js"></script>
     <script src="asset/flatui/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="asset/js/jquery.slabtext.js"></script>
     <script src="asset/flatui/js/bootstrap.min.js"></script>
     <script src="asset/flatui/js/bootstrap-select.js"></script>
     <script src="asset/flatui/js/bootstrap-switch.js"></script>
@@ -82,8 +137,11 @@
     <script src="asset/flatui/js/jquery.tagsinput.js"></script>
     <script src="asset/flatui/js/jquery.placeholder.js"></script>
     <script src="asset/flatui/js/jquery.stacktable.js"></script>
-    <script src="asset/flatui/js/application.js"></script>
     <script src="asset/js/app.js"></script>
+    <script src="asset/js/html2canvas.js"></script>
+    <script src="//cdn.quilljs.com/0.20.1/quill.js"></script>
+    <script src="asset/flatui/js/application.js"></script>
+    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
 </body>
 
 </html>

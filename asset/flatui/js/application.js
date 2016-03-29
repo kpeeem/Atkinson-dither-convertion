@@ -6,42 +6,74 @@ String.prototype.repeat = function(num) {
 
 (function($) {
 
+    var basicEditor = new Quill('.editor', {
+        modules: {
+            'multi-cursor': true,
+            'toolbar': { container: '.editor-toolbar' },
+            'link-tooltip': true
+        },
+        theme: 'snow',
+        formats: ['bold', 'italic', 'color', 'font', 'size', 'align']
+    });
 
-        $('input[type=file]').on('change', prepareUpload);
+    $('.get-screenshot').click(function() {
+        html2canvas($('.editor'), {
+            onrendered: function(canvas) {
+                var dataURL = canvas.toDataURL();
+                $('img.source')[0].src = dataURL;
+                App.run();
+            }
+        });
+    })
+    $('.slabtext-button').click(function() {
 
-        // Grab the files and set them to our variable
-        function prepareUpload(event)
-        {
-          var file = this.files[0];
+        $(".ql-editor > div").slabText({
+            // Don't slabtext the headers if the viewport is under 380px
+            "viewportBreakpoint": 384
+        });
+        $('.slabtextdone').html($('.slabtextdone').html().replace(/span> <span/g, 'span><span'))
+    })
 
-          if ( window.FileReader ) {
+
+    $('input[type=file]').on('change', prepareUpload);
+
+    // Grab the files and set them to our variable
+    function prepareUpload(event) {
+        var file = this.files[0];
+
+        if (window.FileReader) {
             reader = new FileReader();
-            reader.onloadend = function (e) {
-              $('.source').attr('src',e.target.result);
-              App.run();
+            reader.onloadend = function(e) {
+                $('.source').attr('src', e.target.result);
+                App.run();
             };
             reader.readAsDataURL(file);
-          }
-          if (window.FormData) {
+        }
+        if (window.FormData) {
             formdata = new FormData();
             formdata.append("image", file);
-            }
-          if (formdata) {
-            $.ajax({
-              url: "/upload",
-              type: "POST",
-              data: formdata,
-              processData: false,
-              contentType: false,
-              async: false,
-              success: function (res) {
-                // document.getElementById("preview_pane").innerHTML = res;
-              }
-            });
-          }
-          files = event.target.files;
         }
+        if (formdata) {
 
+        }
+        files = event.target.files;
+    }
+
+    $('.print').click(function() {
+        var base64 = $('#canvas')[0].toDataURL();
+
+        $.ajax({
+            url: "print",
+            type: "POST",
+            data: base64.split(',')[1],
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function(res) {
+                // document.getElementById("preview_pane").innerHTML = res;
+            }
+        });
+    })
 
     // Add segments to a slider
     $.fn.addSliderSegments = function(amount) {
@@ -53,6 +85,17 @@ String.prototype.repeat = function(num) {
     };
 
     $(function() {
+
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width; //get proper width
+            var mw = 435; // min width of site
+            var ratio = ww / mw; //calculate ratio
+            if (ww < mw) { //smaller than minimum size
+                $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+            } else { //regular size
+                $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+            }
+        }
 
         // Custom Selects
         $("select[name='huge']").selectpicker({ style: 'btn-huge btn-primary', menuStyle: 'dropdown-inverse' });
@@ -78,10 +121,11 @@ String.prototype.repeat = function(num) {
             $slider.slider({
                 min: -100,
                 max: 100,
-                value: 0,
+                value: localStorage.brightness || 0,
                 orientation: "horizontal",
                 range: "min",
                 change: function(event, ui) {
+                    localStorage.brightness = ui.value;
                     App.brightness = ui.value;
                     App.run();
                 }
@@ -93,45 +137,16 @@ String.prototype.repeat = function(num) {
             $slider.slider({
                 min: 1,
                 max: 10,
-                value: 1,
+                value: localStorage.contrast * 10 || 8,
                 orientation: "horizontal",
                 range: "min",
                 change: function(event, ui) {
-                    App.contrast = ui.value / 10;
+                    var value = ui.value / 10;
+                    localStorage.contrast = value
+                    App.contrast = value;
                     App.run();
                 }
             }).addSliderSegments($slider.slider("option").max);
-        }
-
-        var $slider2 = $("#slider2");
-        if ($slider2.length > 0) {
-            $slider2.slider({
-                min: 1,
-                max: 5,
-                values: [3, 4],
-                orientation: "horizontal",
-                range: true
-            }).addSliderSegments($slider2.slider("option").max);
-        }
-
-        var $slider3 = $("#slider3"),
-            slider3ValueMultiplier = 100,
-            slider3Options;
-        if ($slider3.length > 0) {
-            $slider3.slider({
-                min: 1,
-                max: 5,
-                values: [3, 4],
-                orientation: "horizontal",
-                range: true,
-                slide: function(event, ui) {
-                    $slider3.find(".ui-slider-value:first").text("$" + ui.values[0] * slider3ValueMultiplier).end()
-                        .find(".ui-slider-value:last").text("$" + ui.values[1] * slider3ValueMultiplier);
-                }
-            });
-            slider3Options = $slider3.slider("option");
-            $slider3.addSliderSegments(slider3Options.max).find(".ui-slider-value:first").text("$" + slider3Options.values[0] * slider3ValueMultiplier).end()
-                .find(".ui-slider-value:last").text("$" + slider3Options.values[1] * slider3ValueMultiplier);
         }
 
         // Add style class name to a tooltips
