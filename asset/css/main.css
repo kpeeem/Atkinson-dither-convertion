@@ -51,7 +51,6 @@ canvas {
 .source-container {
     /*padding-top: 70px;*/
 }
-
 .slabtext-button:after {
     content: 'ST'
 }
@@ -89,4 +88,5 @@ canvas {
 
 .slabtext {
     letter-spacing: -0.4px;
+
 }
