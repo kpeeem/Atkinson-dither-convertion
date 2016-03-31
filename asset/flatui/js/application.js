@@ -31,7 +31,7 @@ String.prototype.repeat = function(num) {
             // Don't slabtext the headers if the viewport is under 380px
             "viewportBreakpoint": 384
         });
-        $('.slabtextdone').html($('.slabtextdone').html().replace(/span> <span/g, 'span><span'))
+        // $('.slabtextdone').html($('.slabtextdone').html().replace(/\\span> <span/g, '\\span><span'))
     })
 
 
@@ -61,16 +61,20 @@ String.prototype.repeat = function(num) {
 
     $('.print').click(function() {
         var base64 = $('#canvas')[0].toDataURL();
-
+        var url = '' || localStorage.url
+        var type = $('.print-selector-radio input[checked]').val();
         $.ajax({
-            url: "print",
+            url: url + "/printer/"+type+"/print_raw",
             type: "POST",
             data: base64.split(',')[1],
-            processData: false,
+            // processData: false,
             contentType: false,
-            async: false,
-            success: function(res) {
-                // document.getElementById("preview_pane").innerHTML = res;
+            // async: false,
+            complete: function(res) {
+                $('.print.btn').text('Print').removeClass('orange');
+            },
+            beforeSend: function(res) {
+                $('.print.btn').text('Send to printer').addClass('orange');
             }
         });
     })
