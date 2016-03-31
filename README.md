@@ -7,11 +7,11 @@ Atkinson dither convertion on js for little printer
 
 **UI:** 
 
-![alt text](http://i.imgur.com/qCukFLl.jpg "UI")
+![alt text](http://i.imgur.com/Kjz7k4S.jpg "UI")
 
 **Result:**
 
-![alt text](http://i.imgur.com/ctg6c5H.jpg "Result")
+![alt text](http://i.imgur.com/TjcaVs7.jpg "Result")
 
 
 
