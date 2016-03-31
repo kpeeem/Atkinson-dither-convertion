@@ -85,7 +85,8 @@
             <!-- /.col-md-6 -->
             <div class="col-xs-12 col-lg-4">
                 <div class="reciept">
-                    <canvas id="canvas" class=''></canvas>
+                        <canvas id="canvas" class=''></canvas>
+                         <div class="zigzag"></div><!-- /.zigzag -->
                     <div class="row margin20">
                         <div class="margin20 group col-xs-10 col-xs-offset-1">
                             <div class="col-xs-3">
@@ -100,7 +101,7 @@
                             <!-- /.col-xs-9 -->
                         </div>
                         <!-- /.margin20 group -->
-                        <div class="margin20 group col-xs-10 col-xs-offset-1">
+                        <div class="group col-xs-10 col-xs-offset-1">
                             <div class="col-xs-3">
                                 <div class="label label-large">
                                     Contrast
@@ -114,6 +115,20 @@
                             <!-- /.btn btn-large btn-block btn-primary -->
                         </div>
                         <!-- /.margin20 group -->
+                        <div class="margin20 group col-xs-6 col-xs-offset-3 print-selector-radio">
+                            <label class="radio">
+                                <input type="radio" name="print-selector" id="printandface" value="printandface" data-toggle="radio" checked>Simple Print
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="print-selector" id="print" value="print" data-toggle="radio">Print without face
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="print-selector" id="delivery" value="delivery" data-toggle="radio">Delivery
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="print-selector" id="deliveryandface" value="deliveryandface" data-toggle="radio">Delivery with face
+                            </label>
+                        </div>
                         <button class="btn btn-large btn-block btn-primary margin20 col-center print" style="width: 270px; margin-top:20px;">Print</button>
                     </div>
                     <!-- /.row -->

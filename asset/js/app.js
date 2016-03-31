@@ -66,6 +66,7 @@ App.run = function() {
             image.data[i] = p;
             image.data[i + 1] = p;
             image.data[i + 2] = p;
+            // image.data[i + 3] = 0;
             // Skipping alpha channel.
         }
     }
@@ -116,15 +117,15 @@ App.run = function() {
         canvBlock.width = width;
         canvBlock.height = height + 100;
         var ctx = canvBlock.getContext('2d');
-
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, width, canvBlock.height);
         ctx.drawImage(el, ZERO, ZERO, width, height);
         var data = ctx.getImageData(ZERO, ZERO, width, height);
         self.contrast(data);
         self.grayscale(data);
         self.atkinson_alg(data, height, width);
         self.spread(data);
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(0, 0, width, canvBlock.height);
+
         ctx.putImageData(data, ZERO, ZERO);
     }
     var sourceImg = $('.source')[0];
